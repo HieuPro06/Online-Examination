@@ -5,6 +5,7 @@
   <title>Course</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" th:href="@{/css/course_teacher.css}">
+  <link rel="stylesheet" href="../static/css/course_teacher.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -19,14 +20,14 @@
     </button>
 
     <div class="dropdown">
-      <button class="profile_btn">
+      <button class="profile_btn" th:text="${teacher.name}">
         Profile
         <i class="fa-solid fa-caret-down"></i>
       </button>
     </div>
 
   </div>
-  <div>
+  <div style="position: relative">
     <div class="infoClass">
       <div>
         <h1>Tên lớp : </h1>
@@ -75,14 +76,14 @@
           <td th:text="${exam.endDate.toString().split(' ')[0]}"></td>
           <td th:text="${exam.totalTime/60 + ' phút'}"></td>
         <td>
-          <button class="button button1">Sửa bài kiểm tra</button>
+          <button class="button button1" th:data-id="${exam.id}" onclick="editExam(this)">Sửa bài kiểm tra</button>
         </td>
           <td><button class="button button2" th:data-id="${exam.id}" onclick="deleteExam(this)">Xoá bài kiểm tra</button></td>
       </tr>
       </tbody>
     </table>
     <div class="add">
-      <button class="button button1">Thêm bài kiểm tra</button>
+      <button class="button button1" onclick="createExam()">Thêm bài kiểm tra</button>
     </div>
 <!--      <div class="processorWrap">
           <h1 class="headingWaitProcess">Danh sách sinh viên chờ duyệt</h1>
@@ -106,7 +107,28 @@
               </tbody>
           </table>
       </div>-->
+    <div class="formModal" style="display: none">
+      <form action="" method="" class="formGroup">
+        <h1 style="text-align: center">Thông tin bài kiểm tra</h1>
+        <div class="form">
+          <label>Tên bài</label><br>
+          <input type="text"><br>
+
+          <label>Ngày bắt đầu</label><br>
+          <input type="text"><br>
+
+          <label>Ngày kết thúc</label><br>
+          <input type="text"><br>
+
+          <label>Thời gian làm</label><br>
+          <input type="text"><br>
+          <input type="submit" value="Hoàn tất" style="width: 60% ; margin: 0 auto" >
+        </div>
+
+      </form>
+    </div>
   </div>
+
 
 </div>
 </body>
@@ -125,5 +147,9 @@
         }
      });
   }
+  editExam = (ele) => {
+    form = $('.formModal').style.display = 'block'
+  }
+
 </script>
 </html>
